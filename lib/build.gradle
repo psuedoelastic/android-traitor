@@ -1,8 +1,53 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 
 jar.baseName = 'android-traitor'
 jar.version = '0.0.1-SNAPSHOT'
 
 dependencies {
     compile project(':platform')
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = 'com.shamanland'
+            pom.artifactId = jar.baseName
+            pom.version = jar.version
+
+            repository(url: 'http://repo.shamanland.com') {
+                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+            }
+
+            snapshotRepository = repository
+
+            pom.project {
+                name 'Android Traitor'
+                packaging 'jar'
+                description 'Java library which can be used to crack Android SDK hidden methods, etc.'
+                url 'https://github.com/shamanland/android-traitor'
+
+                scm {
+                    url 'https://github.com/shamanland/android-traitor'
+                    connection 'https://github.com/shamanland/android-traitor.git'
+                    developerConnection 'https://github.com/shamanland/android-traitor.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'o.kropachov@shamanland.com'
+                        name 'Oleksii Kropachov'
+                    }
+                }
+            }
+        }
+    }
 }
