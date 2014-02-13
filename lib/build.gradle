@@ -4,8 +4,13 @@ apply plugin: 'maven'
 jar.baseName = 'android-traitor'
 jar.version = '0.0.1-SNAPSHOT'
 
+configurations{
+    providedCompile
+    compile.extendsFrom providedCompile
+}
+
 dependencies {
-    compile project(':platform')
+    providedCompile project(':platform')
 }
 
 uploadArchives {
